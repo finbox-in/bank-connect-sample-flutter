@@ -3,7 +3,7 @@ import 'dart:convert';
 // import 'package:finbox_bc_plugin/bcflutter.dart';
 
 
-import 'package:finbox_bc/finbox_bc.dart';
+import 'package:finbox_bc_plugin/finbox_bc_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // }
 
   _initSdk() {
-    FinBoxBc.initSdk(apiKeyController.text, fromDateController.text,
+    FinBoxBcPlugin.initSdk(apiKeyController.text, fromDateController.text,
         toDateController.text, bankController.text);
   }
 
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   initState() {
     _initSdk();
-    FinBoxBc.platform.setMethodCallHandler(_getJourneyResult);
+    FinBoxBcPlugin.platform.setMethodCallHandler(_getJourneyResult);
   }
 
   @override
