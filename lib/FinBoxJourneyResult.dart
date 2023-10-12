@@ -15,6 +15,6 @@ class FinBoxJourneyResult {
 
   @override
   String toString() {
-    return '{ ${this.entityId}, ${this.linkId},${this.message}, ${this.errorType} }';
+    return '{ $entityId, $linkId,$message, $errorType }';
   }
 }
