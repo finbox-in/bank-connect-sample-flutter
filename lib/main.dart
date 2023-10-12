@@ -14,11 +14,11 @@ void main() {
 }
 
 TextEditingController apiKeyController =
-    new TextEditingController(text: "ClYkH4mb872LfVty3K61M5GgwkPcZzJf88SXLAb4");
+    TextEditingController(text: "ClYkH4mb872LfVty3K61M5GgwkPcZzJf88SXLAb4");
 TextEditingController fromDateController =
-    new TextEditingController(text: "01/01/2022");
+    TextEditingController(text: "01/01/2022");
 TextEditingController toDateController =
-    new TextEditingController(text: "01/05/2022");
+    TextEditingController(text: "01/05/2022");
 TextEditingController bankController = new TextEditingController(text: "HDFC");
 TextEditingController resultController = new TextEditingController(text: "Demo");
 
