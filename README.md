@@ -17,9 +17,11 @@ Following will be shared by FinBox team at the time of integration:
 
 Specify the following in `local.properties` file:
 
+```properties
 ACCESS_KEY=<ACCESS_KEY>
 SECRET_KEY=<SECRET_KEY>
 BC_SDK_VERSION=<SDK_VERSION>
+```
 
 Add plugin dependency in `pubspec.yaml` file:
 
