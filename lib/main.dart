@@ -104,10 +104,11 @@ class _MyHomePageState extends State<MyHomePage> {
   static Future<void> _getJourneyResult(MethodCall call) async {
     if (call.method != 'getJourneyResult') "";
 
-    print("Anirudh1 ${call.arguments}");
+    print("Call Arguments ${call.arguments}");
     Map<String, dynamic> arguments = jsonDecode(call.arguments);
     FinBoxJourneyResult result = FinBoxJourneyResult.fromJson(arguments);
-    print("Anirudh2 ${result.entityId}, ${result.message}");
+    print("Entity Id ${result.entityId}");
+    print("Message ${result.message}");
   }
 
   @override
