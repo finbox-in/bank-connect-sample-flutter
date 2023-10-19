@@ -101,14 +101,13 @@ class _MyHomePageState extends State<MyHomePage> {
         toDateController.text, bankController.text);
   }
 
-  static Future<String> _getJourneyResult(MethodCall call) async {
+  static Future<void> _getJourneyResult(MethodCall call) async {
     if (call.method != 'getJourneyResult') "";
 
     print("Anirudh1 ${call.arguments}");
     Map<String, dynamic> arguments = jsonDecode(call.arguments);
     FinBoxJourneyResult result = FinBoxJourneyResult.fromJson(arguments);
     print("Anirudh2 ${result.entityId}, ${result.message}");
-   return result.entityId;
   }
 
   @override
