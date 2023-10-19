@@ -105,7 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (call.method != 'getJourneyResult') "";
 
     print("Anirudh1 ${call.arguments}");
-    FinBoxJourneyResult result = FinBoxJourneyResult.fromJson(call.arguments);
+    Map<String, dynamic> arguments = jsonDecode(call.arguments);
+    FinBoxJourneyResult result = FinBoxJourneyResult.fromJson(arguments);
     print("Anirudh2 ${result.entityId}, ${result.message}");
    return result.entityId;
   }
