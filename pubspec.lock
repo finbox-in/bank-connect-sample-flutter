@@ -61,10 +61,18 @@ packages:
     dependency: "direct main"
     description:
       name: finbox_bc_plugin
-      sha256: d2bc4a3d9a158fd89686e382ba90455d1814ab8e4fe0985d27674e9dc778867d
+      sha256: a024f704580c611d9b98d34a0a1e1b9c13c1c5df86a851bf2cefed244d300434
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0+8"
+    version: "1.1.1+9"
+  finbox_bureau_plugin:
+    dependency: "direct main"
+    description:
+      name: finbox_bureau_plugin
+      sha256: "33d4e3afa885ac15bd4409279e7e93af6544f616fa5a529b965decace2ae1927"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -271,4 +279,4 @@ packages:
     version: "0.1.4-beta"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=3.3.0"
