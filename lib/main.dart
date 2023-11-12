@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   static Future<void> _getJourneyResult(MethodCall call) async {
-    if (call.method != 'getJourneyResult') "";
+    if (call.method != 'getJourneyResult') return;
 
     print("Call Arguments ${call.arguments}");
     Map<String, dynamic> arguments = jsonDecode(call.arguments);
