@@ -16,10 +16,10 @@ void main() {
 TextEditingController apiKeyController =
     TextEditingController(text: "ClYkH4mb872LfVty3K61M5GgwkPcZzJf88SXLAb4");
 TextEditingController fromDateController =
-    TextEditingController(text: "01/01/2022");
+    TextEditingController(text: "01/01/2023");
 TextEditingController toDateController =
-    TextEditingController(text: "01/05/2022");
-TextEditingController bankController = new TextEditingController(text: "HDFC");
+    TextEditingController(text: "01/05/2023");
+TextEditingController bankController = new TextEditingController(text: "");
 TextEditingController resultController = new TextEditingController(text: "Demo");
 
 class MyApp extends StatelessWidget {
