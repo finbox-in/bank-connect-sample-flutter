@@ -97,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   initState() {
-    _initSdk();
     FinBoxBcPlugin.platform.setMethodCallHandler(_getJourneyResult);
   }
 
