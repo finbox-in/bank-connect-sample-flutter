@@ -80,22 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   resultController.dispose();
-  //   super.dispose();
-  // }
-
-  // void printLatestValue() {
-  //   print('Second text field: ${resultController.text}');
-  // }
-  //
-  // @override
-  // void initState() {
-  //   resultController.addListener(_printLatestValue);
-  //   super.initState();
-  // }
-
   _initSdk() {
     FinBoxBcPlugin.initSdk(apiKeyController.text, fromDateController.text,
         toDateController.text, bankController.text);
@@ -181,23 +165,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Start'),
             )
           ],
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // children: <Widget>[
-          //   const Text(
-          //     'You have pushed the button this many times:',
-          //   ),
-          //   Text(
-          //     '$_counter',
-          //     style: Theme.of(context).textTheme.headline4,
-          //   ),
-          // ],
         ),
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _initSdk,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
