@@ -15,13 +15,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-//        maven {
-//            url "s3://risk-manager-android-sdk/artifacts"
-//            credentials(AwsCredentials) {
-//                accessKey = "AKIAZUHCZC3YQRNCIRXA"
-//                secretKey = "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"
-//            }
-//        }
     }
 }
 
