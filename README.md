@@ -30,14 +30,7 @@ Add plugin dependency in `pubspec.yaml` file:
  ```
 
 ## Init Library in Kotlin Application
-```kotlin
-class MainApp:FlutterApplication() {
-    override fun onCreate() {
-        super.onCreate()
-        FinBoxBcPlugin.initLibrary(this)
-    }
-}
-```
+
 ## Init SDK
 
 ```dart
