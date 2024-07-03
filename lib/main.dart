@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-// import 'package:finbox_bc_plugin/bcflutter.dart';
-
-
+import 'package:finbox_bc_plugin/enums/aa_journey_mode.dart';
+import 'package:finbox_bc_plugin/enums/aa_recurring_frequency_unit.dart';
+import 'package:finbox_bc_plugin/enums/journey_mode.dart';
+import 'package:finbox_bc_plugin/enums/mode.dart';
 import 'package:finbox_bc_plugin/finbox_bc_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,13 +15,20 @@ void main() {
 }
 
 TextEditingController apiKeyController =
-    TextEditingController(text: "ClYkH4mb872LfVty3K61M5GgwkPcZzJf88SXLAb4");
+    TextEditingController(text: "");
 TextEditingController fromDateController =
-    TextEditingController(text: "01/01/2023");
+TextEditingController(text: "01/02/2024");
 TextEditingController toDateController =
-    TextEditingController(text: "01/05/2023");
+TextEditingController(text: "01/07/2024");
 TextEditingController bankController = new TextEditingController(text: "");
-TextEditingController resultController = new TextEditingController(text: "Demo");
+TextEditingController resultController = new TextEditingController(text: "");
+TextEditingController journeyModeController = TextEditingController(text: null);
+TextEditingController modeController = TextEditingController(text: null);
+TextEditingController mobileController = TextEditingController(text: null);
+TextEditingController aaJourneyModeController = TextEditingController(text: null);
+TextEditingController aaRecurringTenureMonthCountController = TextEditingController(text: null);
+TextEditingController aaRecurringFrequencyUnitController = TextEditingController(text: null);
+TextEditingController aaRecurringFrequencyValueController = TextEditingController(text: null);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -66,23 +74,95 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  // final resultController = new TextEditingController(text: "Demo");
+  final List<String> _modeDropdownItems = [
+    "Select Mode",
+    "aa",
+    "online",
+    "pdf"
+  ];
+  final Map<String, Mode?> _modeDropdownMap = {
+    "Select Mode": null,
+    "aa": Mode.AA,
+    "online": Mode.ONLINE,
+    "pdf": Mode.PDF
+  };
+  String? _selectedMode;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final List<String> _AAFrequencyUnitDropdownItems = [
+    "Select AA Recurring Frequency Unit",
+    "day",
+    "month",
+    "year"
+  ];
+  final Map<String, AARecurringFrequencyUnit?> _AAFrequencyUnitDropdownMap = {
+    "Select AA Recurring Frequency Unit": null,
+    "day": AARecurringFrequencyUnit.DAY,
+    "month": AARecurringFrequencyUnit.MONTH,
+    "year": AARecurringFrequencyUnit.YEAR
+  };
+  String? _selectedAAFrequencyUnit;
+
+  final List<String> _journeyModeDropdownItems = [
+    "Select Journey Mode",
+    "Normal",
+    "multi_pdf"
+  ];
+  final Map<String, JourneyMode?> _journeyModeDropdownMap = {
+    "Select Journey Mode": null,
+    "Normal": null,
+    "multi_pdf": JourneyMode.MULTI_PDF
+  };
+  String? _selectedJourneyMode;
+
+  final List<String> _AAJourneyModeDropdownItems = [
+    "Select AA Journey Mode",
+    "only_once",
+    "only_recurring"
+  ];
+  final Map<String, AAJourneyMode?> _AAJourneyModeDropdownMap = {
+    "Select AA Journey Mode": null,
+    "only_once": AAJourneyMode.ONLY_ONCE,
+    "only_recurring": AAJourneyMode.ONLY_RECURRING
+  };
+  String? _selectedAAJourneyMode;
 
   _initSdk() {
-    FinBoxBcPlugin.initSdk(apiKeyController.text, "demo_bank_connect_user_1",
-        fromDateController.text, toDateController.text, bankController.text, null);
+    // Get the selected Mode
+    Mode? mode = _modeDropdownMap[_selectedMode];
+
+    JourneyMode? journeyMode = _journeyModeDropdownMap[_selectedJourneyMode];
+
+    AAJourneyMode? aaJourneyMode =
+    _AAJourneyModeDropdownMap[_selectedAAJourneyMode];
+
+    AARecurringFrequencyUnit? frequencyUnit =
+    _AAFrequencyUnitDropdownMap[_selectedAAFrequencyUnit];
+
+    var tenureMonthCount;
+    if (aaRecurringTenureMonthCountController.text != null &&
+        aaRecurringTenureMonthCountController.text.isNotEmpty) {
+      tenureMonthCount = int.parse(aaRecurringTenureMonthCountController.text);
+    }
+
+    var frequencyValue;
+    if (aaRecurringFrequencyValueController.text != null &&
+        aaRecurringFrequencyValueController.text.isNotEmpty) {
+      frequencyValue = int.parse(aaRecurringFrequencyValueController.text);
+    }
+
+    FinBoxBcPlugin.initSdk(
+        apiKeyController.text,
+        "demo_bank_connect_user_1",
+        fromDateController.text,
+        toDateController.text,
+        bankController.text,
+        journeyMode,
+        mode,
+        mobileController.text,
+        aaJourneyMode,
+        tenureMonthCount,
+        frequencyUnit,
+        frequencyValue);
   }
 
   static Future<void> _getJourneyResult(MethodCall call) async {
@@ -92,7 +172,16 @@ class _MyHomePageState extends State<MyHomePage> {
     Map<String, dynamic> arguments = jsonDecode(call.arguments);
     FinBoxJourneyResult result = FinBoxJourneyResult.fromJson(arguments);
     print("Entity Id ${result.entityId}");
+    print("Session Id ${result.sessionId}");
     print("Message ${result.message}");
+
+    if (result.sessionId != null) {
+      resultController.text = result.sessionId!;
+    } else if (result.entityId != null) {
+      resultController.text = result.entityId!;
+    } else if (resultController.text != null) {
+      resultController.text = result.message!;
+    }
   }
 
   @override
@@ -102,7 +191,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -149,13 +237,101 @@ class _MyHomePageState extends State<MyHomePage> {
                 hintText: 'Bank Name',
               ),
             ),
+            DropdownButton<String>(
+              hint: Text('Journey Mode'),
+              value: _selectedJourneyMode,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedJourneyMode = newValue;
+                });
+              },
+              items: _journeyModeDropdownItems
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            DropdownButton<String>(
+              hint: Text('Mode'),
+              value: _selectedMode,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedMode = newValue;
+                });
+              },
+              items: _modeDropdownItems.map<DropdownMenuItem<String>>((
+                  String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
             TextField(
-                controller: resultController,
-                decoration: InputDecoration(
+              controller: mobileController,
+              decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Result',
-                ),
-               ),
+                  hintText: 'Mobile Number',
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0)),
+            ),
+            DropdownButton<String>(
+              hint: Text('AA Journey Mode'),
+              value: _selectedAAJourneyMode,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedAAJourneyMode = newValue;
+                });
+              },
+              items: _AAJourneyModeDropdownItems.map<DropdownMenuItem<String>>((
+                  String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            TextField(
+              controller: aaRecurringTenureMonthCountController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'AA Recurring Tenure Month Count',
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0)),
+            ),
+            DropdownButton<String>(
+              hint: Text('AA Recurring Frequency Unit'),
+              value: _selectedAAFrequencyUnit,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedAAFrequencyUnit = newValue;
+                });
+              },
+              items: _AAFrequencyUnitDropdownItems.map<
+                  DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            TextField(
+              controller: aaRecurringFrequencyValueController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'AA Recurring Frequency Value',
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0)),
+            ),
+            TextField(
+              controller: resultController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Result',
+              ),
+            ),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
