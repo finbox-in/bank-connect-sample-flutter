@@ -69,7 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _initSdk() {
     FinBoxBcPlugin.initSdk(apiKeyController.text, "demo_bank_connect_user_1",
-        fromDateController.text, toDateController.text, bankController.text, null);
+        fromDateController.text, toDateController.text, bankController.text, null
+    , null, null, null, null, null, null);
   }
 
   static Future<void> _getJourneyResult(MethodCall call) async {
