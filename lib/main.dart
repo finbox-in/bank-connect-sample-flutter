@@ -14,7 +14,7 @@ void main() {
 }
 
 TextEditingController apiKeyController =
-    TextEditingController(text: "ClYkH4mb872LfVty3K61M5GgwkPcZzJf88SXLAb4");
+    TextEditingController(text: "");
 TextEditingController fromDateController =
     TextEditingController(text: "01/01/2023");
 TextEditingController toDateController =
@@ -66,19 +66,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  // final resultController = new TextEditingController(text: "Demo");
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   _initSdk() {
     FinBoxBcPlugin.initSdk(apiKeyController.text, "demo_bank_connect_user_1",
