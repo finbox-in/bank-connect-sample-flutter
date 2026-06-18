@@ -1,0 +1,12 @@
+name: Security Scan
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  gitleaks:
+    uses: finbox-in/infosecops/.github/workflows/gitleaks.yml@main
